@@ -1,41 +1,82 @@
-// El principal objetivo de este desafío es fortalecer tus habilidades en lógica de programación. Aquí deberás desarrollar la lógica para resolver el problema.
+document.addEventListener("DOMContentLoaded", (event) => {
+let amigos = [];
+let seleccionAmigos = [];
+let recursividad = true;
+let resultado = "";
 
-let amigos =[];
-const nombreInicio = document.getElementById('nombreInicio');
-const adicionar =  document.getElementById('adicionar');
-const listaAmigos = document.getElementById('listaAmigos');
-const sorteo = document.getElementById('sorteo');
-const resultado = document.getElementById('resultado');
-
-adicionar.addEventListener('click', () => {
-    const nombre = nombreInicio.value.trim();
-
-    if (nombre === ''){
-        alert('Por favor ingrese su nombre.');
-        return;
+//agrega y verifica la lista de los amigos 
+function agregaAmigo() {
+    //Obtiene el texto en el input amigo y lo pasa amayusculas
+    const nombreAmigo = document.getElementById('amigo').value.toUpperCase(); 
+    if (nombreAmigo == "") {
+        alert("Por favor, inserte su nombre.");
+    } else if (amigos.includes(nombreAmigo)) {
+        alert(`No puedes repetir el amigo "${nombreAmigo}"`);
+    } else{
+        amigos.push(nombreAmigo);
+        console.log(`${amigos}`);
     }
-
-    amigos.push(nombre);
-    nombreInicio.value = '';
-    actualizarlista();
-
-});
-
-sorteo.addEventListener('click', () => {
-    if (amigos.length === 0) {
-        alert('No hay nombres en la lista.');
-        return;
-    }
-    const amigoSecreto = amigos[Math.floor(Math.random() * amigos.length)];
-    resultado.textContent = `Tu amigo secreto es: ${amigoSecreto}`;
-
-});
-
-function actualizarlista() {
-    listaAmigos.innerHTML = '';
-    amigos.forEach(amigo => {
-        const li = document.createElement('li');
-        li.textContent = amigo;
-        listaAmigos.appendChild(li);
-    })
+    actualizarLista();
+    limpiarNombre();
 }
+//muentra la lista de amigo
+function actualizarLista() {
+    const lista = document.getElementById("listaAmigos");
+    lista.innerHTML = ""; // Limpiar la lista antes de actualizar
+    for (let i = 0; i < amigos.length; i++) {
+        lista.innerHTML += `<li>${amigos[i]}</li>`; 
+    }
+}
+function limpiarNombre() {
+    document.querySelector('#amigo').value = "";
+}
+//realiza el sorteo del amigo secreto
+function sorteo() {
+    const listado = amigos.length; 
+    console.log(listado);
+    return Math.floor(Math.random() * listado);
+}
+function verificarResultado() {
+    let colocarAmigos = amigos.length - 1;
+    let colocarSeleccion = seleccionAmigos.length - 1;
+    console.log(`Numero de amigos ${colocarAmigos} y amigos seleccionados ${colocarSeleccion}`);
+    if (colocarAmigos == colocarSeleccion) {
+        alert ("Ya no hay mas amigos disponibles. Reinicie la pagina para otro formulario");
+        recursividad = false;
+        document.getElementById("botonAmigo").setAttribute('disabled',true);
+        document.getElementById('botonSorteo').setAttribute('disabled',true);
+    }
+}
+function sortearAmigo() {
+    if (amigos.length === 0) {
+        alert("No hay nombres agregados para sortear");
+    }else if (amigos.length <= 2) {
+        alert("Ingresar mas nombres para hacer el sorteo");
+    }else {
+       /* if (recursividad) {
+            do {
+                resultado = amigos[sorteo()];
+            } while (seleccionAmigos.includes(resultado)); //repetir hasta enconrtrar un nombre no seleccionado
+            seleccionAmigos.push(resultado);
+            console.log(`${resultado}`);
+            relevarAmigo();
+            verificarResultado(); //verifica si ya no hay mas amigos disponibles 
+        }*/
+    }        
+}
+function reiniciarSorteo() {
+    amigos = [];
+    seleccionAmigos = [];
+    recursividad = true;
+    resultado = "";
+    document.getElementById("listaAmigos").innerHTML = "";
+    document.getElementById("resultado").innerHTML = "";
+    document.getElementById("botonAmigo").removeAttribute('disabled');
+    document.getElementById("botonsorteo").removeAttribute('disabled');
+    alert("Sorteo reiniciado. Agrega nuevos nombres.")
+}
+function relevarAmigo() {
+    let listaAmigo = document.getElementById("resultado");
+    listaAmigo.innerHTML=`<li> Tu amigo secreto es <strong>${resultado}</strong></li>`;
+}
+});
