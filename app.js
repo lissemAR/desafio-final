@@ -34,8 +34,8 @@ sorteo.addEventListener('click', () => {
 function actualizarlista() {
     listaAmigos.innerHTML = '';
     amigos.forEach(amigo => {
-        const id = document.createElement('id');
-        id.textContent = amigo;
-        listaAmigos.appendChild(id);
+        const li = document.createElement('li');
+        li.textContent = amigo;
+        listaAmigos.appendChild(li);
     })
 }
