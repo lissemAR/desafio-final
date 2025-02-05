@@ -1,11 +1,12 @@
 document.addEventListener("DOMContentLoaded", (event) => {
+});
 let amigos = [];
-let seleccionAmigos = [];
+let seleccionAmigos = []; 
 let recursividad = true;
 let resultado = "";
 
 //agrega y verifica la lista de los amigos 
-function agregaAmigo() {
+function agregarAmigo() {
     //Obtiene el texto en el input amigo y lo pasa amayusculas
     const nombreAmigo = document.getElementById('amigo').value.toUpperCase(); 
     if (nombreAmigo == "") {
@@ -16,11 +17,11 @@ function agregaAmigo() {
         amigos.push(nombreAmigo);
         console.log(`${amigos}`);
     }
-    actualizarLista();
+    listaAmigos();
     limpiarNombre();
 }
 //muentra la lista de amigo
-function actualizarLista() {
+function listaAmigos() {
     const lista = document.getElementById("listaAmigos");
     lista.innerHTML = ""; // Limpiar la lista antes de actualizar
     for (let i = 0; i < amigos.length; i++) {
@@ -53,7 +54,8 @@ function sortearAmigo() {
     }else if (amigos.length <= 2) {
         alert("Ingresar mas nombres para hacer el sorteo");
     }else {
-       /* if (recursividad) {
+        alert("inico el sorteo");
+        if (recursividad) {
             do {
                 resultado = amigos[sorteo()];
             } while (seleccionAmigos.includes(resultado)); //repetir hasta enconrtrar un nombre no seleccionado
@@ -61,7 +63,7 @@ function sortearAmigo() {
             console.log(`${resultado}`);
             relevarAmigo();
             verificarResultado(); //verifica si ya no hay mas amigos disponibles 
-        }*/
+        }
     }        
 }
 function reiniciarSorteo() {
@@ -79,4 +81,4 @@ function relevarAmigo() {
     let listaAmigo = document.getElementById("resultado");
     listaAmigo.innerHTML=`<li> Tu amigo secreto es <strong>${resultado}</strong></li>`;
 }
-});
+
